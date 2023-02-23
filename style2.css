@@ -39,3 +39,39 @@ body {
   .form_btn {
     background-color: #3cff81 !important;
   }
+
+  .title {
+    margin-top: 70px;
+    color: white;
+    display: flex;
+    justify-content: center
+  }
+  
+  .containerMusics {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    border-radius: 16px;
+    background-color: #1ed760;
+    margin-top: 50px
+  }
+  
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5)
+  }
+  
+  h2 {
+    text-align: center;
+    max-width: 200px;
+    margin-top: 20px !important;
+    font-size: 18px;
+  }
+  
+  td {
+    padding: 15px;
+    text-align: center;
+  }
