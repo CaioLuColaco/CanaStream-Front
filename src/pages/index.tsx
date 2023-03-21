@@ -1,12 +1,9 @@
 
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Navbar from '../components/Navbar'
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-
+import Footer from "@/components/footer"
+import Musics from '@/components/Musics'
 
 export default function Home() {
   return (
@@ -20,6 +17,9 @@ export default function Home() {
 
       <main className={styles.main}>
         <Navbar/>
+
+        <Musics/>
+        
         <Footer />
       </main>
     </>

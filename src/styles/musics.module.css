@@ -1,0 +1,13 @@
+.title {
+    display: flex;
+    color: white;
+    justify-content: center
+}
+
+.boxMusics {
+    display: flex
+}
+
+.music {
+    
+}
