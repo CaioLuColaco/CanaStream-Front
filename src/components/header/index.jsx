@@ -4,6 +4,7 @@ import Link from 'next/link'
 import SandwichMenu from "./SandwichMenu";
 import HiddenModal from "./HiddenModal";
 import { useState } from "react";
+import Image from 'next/image'
 
 const Header = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -12,7 +13,7 @@ const Header = () => {
     <>
       <S.HeaderContainer>
         <S.HeaderBox>
-          <S.Logo src={"./assets/logo.png"} alt="Logo" />
+          <Image src="/logo.png" width={140} height={140} style={{marginLeft: '12.5%'}}/>
 
           <S.Menu>
             <S.MenuItem>
