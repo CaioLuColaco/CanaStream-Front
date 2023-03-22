@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import styles from "@/styles/signup.module.css";
 import Navbar from "@/components/Navbar";
-import React, { useState } from "react";
 import Footer from "@/components/footer";
 
 export default function SignUp() {
