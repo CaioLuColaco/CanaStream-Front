@@ -22,6 +22,7 @@ export default function SignUp() {
             type="text"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
+            required
           />
         </label>
         <label className={styles.label}>
@@ -31,6 +32,7 @@ export default function SignUp() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </label>
         <button className={styles.button_submit} type="submit">
