@@ -13,7 +13,7 @@ export default function Navbar(props) {
             <div className={styles.boxContent}> 
                 <Link href='/' className={styles.link}>Home</Link>
                 <Link href='/faq' className={styles.link}>FAQ</Link>
-                <Link href='/signup' className={styles.link}>Signup</Link>
+                <Link href='/signup' className={styles.link}>Cadastro</Link>
             </div>
         </div>
     )
