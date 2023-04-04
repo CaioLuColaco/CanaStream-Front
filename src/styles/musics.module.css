@@ -8,7 +8,8 @@
 
 .boxMusics {
     padding: 30px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
     color: white;
     gap: 60px
@@ -16,8 +17,9 @@
 
 .music {
     display: flex;
+    flex-wrap:wrap;
     flex-direction: column;
-    align-content: flex-start
+    align-content: center;
 }
 .music img{
     width: 150px;
