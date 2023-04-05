@@ -1,7 +1,14 @@
+import * as crypto from "crypto";
 import React, { useState } from "react";
 import styles from "@/styles/signup.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
+
+interface User {
+  username: string;
+  email: string;
+  password: string;
+}
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -10,7 +17,16 @@ export default function SignUp() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    const hashedPassword = crypto
+      .createHash("sha512")
+      .update(password)
+      .digest("base64");
+    saveUserToLocalStorage({ username, email, password: hashedPassword });
     alert("usuario cadastrado");
+  };
+
+  const saveUserToLocalStorage = (userData: User) => {
+    localStorage.setItem(userData.username, JSON.stringify(userData));
   };
 
   return (
