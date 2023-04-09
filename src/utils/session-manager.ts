@@ -28,7 +28,9 @@ class SessionManager {
   }
 
   static redirect(endpoint: string): void {
-    window.location.href = endpoint;
+    if (typeof window !== "undefined") {
+      window.location.href = endpoint;
+    }
   }
 }
 

@@ -3,13 +3,15 @@ import styles from "@/styles/Home.module.css";
 import Navbar from "../components/Navbar";
 import Footer from "@/components/footer";
 import Musics from "@/components/Musics";
-import { useEffect } from "react";
 import { SessionManager } from "@/utils/session-manager";
 
 export default function Home() {
-  const shouldRender = SessionManager.hasToken();
+  const loggedIn = SessionManager.hasToken();
+  if (!loggedIn) {
+    SessionManager.redirect("/login");
+  }
   return (
-    shouldRender && (
+    loggedIn && (
       <>
         <Head>
           <title>CanaStream</title>
