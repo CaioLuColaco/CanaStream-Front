@@ -20,7 +20,7 @@ export default function Login() {
     if (PasswordManager.passwordsMatch(passwordInput, userHashedPassword)) {
       const token: string = SessionManager.generateToken(username);
       SessionManager.setToken(token);
-      //redirect
+      SessionManager.redirect("/");
     } else {
       alert("Senha incorreta!");
     }

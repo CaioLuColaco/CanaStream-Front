@@ -18,6 +18,10 @@ class SessionManager {
     }
     return false;
   }
+
+  static redirect(endpoint: string): void {
+    window.location.href = endpoint;
+  }
 }
 
 export { SessionManager };

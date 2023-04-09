@@ -18,13 +18,15 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main} style={{ backgroundColor: "#101C27" }}>
-          <Navbar />
+        <div>
+          <main className={styles.main} style={{ backgroundColor: "#101C27" }}>
+            <Navbar />
 
-          <Musics />
+            <Musics />
 
-          <Footer />
-        </main>
+            <Footer />
+          </main>
+        </div>
       </>
     )
   );
