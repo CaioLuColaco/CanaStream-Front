@@ -1,38 +1,31 @@
-import * as crypto from "crypto";
 import React, { useState } from "react";
 import styles from "@/styles/login.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
-
+import { PasswordManager } from "@/utils/password-manager";
+import { SessionManager } from "@/utils/session-manager";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const hashedPassword = crypto
-      .createHash("sha512")
-      .update(password)
-      .digest("base64");
-    
-    if (localStorage.getItem(username) !== null) {
-      const jsonStr = localStorage.getItem(username);
-      
-      if(jsonStr != null){
-          const jsonObj = JSON.parse(jsonStr);
-      
-          if (jsonObj.password === hashedPassword) {
-            alert("Senha correta!");
-          } else {
-            alert("Senha incorreta!");
-          }
-        }
+    const userDataStr = localStorage.getItem(usernameInput);
+    if (!userDataStr) {
+      alert("Usuário não encontrado");
+      return;
+    }
+    const { password: userHashedPassword, username } = JSON.parse(userDataStr);
+    if (PasswordManager.passwordsMatch(passwordInput, userHashedPassword)) {
+      const token: string = SessionManager.generateToken(username);
+      SessionManager.setToken(token);
+      //redirect
     } else {
-      alert("Usuário não encontrado!");
+      alert("Senha incorreta!");
     }
   };
-  
+
   return (
     <>
       <Navbar />
@@ -44,8 +37,8 @@ export default function Login() {
               className={styles.input}
               placeholder=""
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={usernameInput}
+              onChange={(e) => setUsernameInput(e.target.value)}
               required
             />
           </label>
@@ -54,8 +47,8 @@ export default function Login() {
             <input
               className={styles.input}
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
               required
             />
           </label>

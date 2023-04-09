@@ -14,6 +14,7 @@
     "@types/react-dom": "18.0.11",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "jsonwebtoken": "^8.5.1",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -24,5 +25,7 @@
     "fs": false,
     "child_process": false
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1"
+  }
 }
