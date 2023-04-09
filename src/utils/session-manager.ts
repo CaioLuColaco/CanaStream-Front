@@ -12,7 +12,11 @@ class SessionManager {
   }
 
   static hasToken(): boolean {
-    return !!localStorage.getItem("token");
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      return !!token;
+    }
+    return false;
   }
 }
 
