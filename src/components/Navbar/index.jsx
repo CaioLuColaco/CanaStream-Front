@@ -14,6 +14,7 @@ export default function Navbar(props) {
                 <Link href='/' className={styles.link}>Home</Link>
                 <Link href='/faq' className={styles.link}>FAQ</Link>
                 <Link href='/signup' className={styles.link}>Cadastro</Link>
+                <Link href='/login' className={styles.link}>Entrar</Link>
             </div>
         </div>
     )

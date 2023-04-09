@@ -13,17 +13,23 @@ interface User {
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [emailConfirm, setEmailConfirm] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const hashedPassword = crypto
-      .createHash("sha512")
-      .update(password)
-      .digest("base64");
-    saveUserToLocalStorage({ username, email, password: hashedPassword });
-    alert("usuario cadastrado");
-  };
+    if(email == emailConfirm && passwordConfirm == password){
+      const hashedPassword = crypto
+        .createHash("sha512")
+        .update(password)
+        .digest("base64");
+      saveUserToLocalStorage({ username, email, password: hashedPassword });
+      alert("usuario cadastrado");
+      } else {
+        alert("erro nas confimações.");
+      }
+    };
 
   const saveUserToLocalStorage = (userData: User) => {
     localStorage.setItem(userData.username, JSON.stringify(userData));
@@ -57,12 +63,33 @@ export default function SignUp() {
             />
           </label>
           <label className={styles.label}>
-            Senha
+            Confirmar email:
+            <input
+              className={styles.input}
+              type="email"
+              placeholder="insira o mesmo email"
+              value={emailConfirm}
+              onChange={(e) => setEmailConfirm(e.target.value)}
+              required
+            />
+          </label>
+          <label className={styles.label}>
+            Senha:
             <input
               className={styles.input}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          <label className={styles.label}>
+            Confirmar Senha:
+            <input
+              className={styles.input}
+              type="password"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
               required
             />
           </label>
