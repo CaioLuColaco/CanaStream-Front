@@ -6,7 +6,8 @@ import { useEffect } from 'react'
 
 export default function Navbar(props) {
     const isLoggedIn = SessionManager.hasToken()
-    const loginItemText = isLoggedIn ? "Sair" : "Entrar"
+    const sessionItemText = isLoggedIn ? "Sair" : "Entrar"
+    const sessionItemPath = isLoggedIn ? "/logout" : "/login"
     return (
         <div className={styles.box}>
             <div className={styles.logoBox}>
@@ -18,7 +19,7 @@ export default function Navbar(props) {
                 {isLoggedIn && <Link href='/' className={styles.link}>Home</Link>}
                 <Link href='/faq' className={styles.link}>FAQ</Link>
                 <Link href='/signup' className={styles.link}>Cadastro</Link>
-                <Link href='/login' className={styles.link}>{loginItemText}</Link>
+                <Link href={sessionItemPath} className={styles.link}>{sessionItemText}</Link>
             </div>
         </div>
     )

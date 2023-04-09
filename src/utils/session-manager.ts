@@ -19,6 +19,14 @@ class SessionManager {
     return false;
   }
 
+  static logout(): void {
+    const token = localStorage.getItem("token");
+    if (token) {
+      localStorage.removeItem("token");
+      SessionManager.redirect("/login");
+    }
+  }
+
   static redirect(endpoint: string): void {
     window.location.href = endpoint;
   }
