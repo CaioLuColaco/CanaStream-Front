@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styles from "@/styles/signup.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
+import { PasswordManager } from "@/utils/password-manager";
 
 interface User {
   username: string;
@@ -19,17 +20,14 @@ export default function SignUp() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if(email == emailConfirm && passwordConfirm == password){
-      const hashedPassword = crypto
-        .createHash("sha512")
-        .update(password)
-        .digest("base64");
+    if (email == emailConfirm && passwordConfirm == password) {
+      const hashedPassword = PasswordManager.generateHash(password);
       saveUserToLocalStorage({ username, email, password: hashedPassword });
       alert("usuario cadastrado");
-      } else {
-        alert("erro nas confimações.");
-      }
-    };
+    } else {
+      alert("erro nas confimações.");
+    }
+  };
 
   const saveUserToLocalStorage = (userData: User) => {
     localStorage.setItem(userData.username, JSON.stringify(userData));
