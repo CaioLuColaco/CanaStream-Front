@@ -2,12 +2,13 @@
     display: flex;
     color: white;
     justify-content: center;
-    margin-top: 30px;
-    margin-bottom: 10px
+    font-size: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem
 }
 
 .boxMusics {
-    padding: 30px;
+    padding: 3rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
@@ -22,15 +23,16 @@
     align-content: center;
 }
 .music img{
-    width: 150px;
-    height: 150px;
+    width: 15rem;
+    height: 15rem;
     align-items: center;
-    border-radius: 15px;
+    border-radius: 1rem;
     object-fit: cover
 }
 .music h3{
     margin: 10px 0 0 0;
-}
-.music p{
-    margin: 10px 0 0 0;
+    font-size: 1.5rem;
+    font-family: TitilliumWeb-Regular, 'Titillium Web';
+    color: white;
+    text-decoration: none;
 }
