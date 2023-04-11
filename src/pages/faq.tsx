@@ -12,7 +12,7 @@ const FaqScreen: React.FC = () => {
         <div>
           <div className={styles.item} title="Como faço para criar uma conta?">
             <p>
-              Para criar uma conta, basta clicar em "Sign Up" na página inicial
+              Para criar uma conta, basta clicar em `Sign Up` na página inicial
               e preencher o formulário de registro com suas informações
               pessoais. Após concluir o registro, você pode começar a usar
               nossos serviços imediatamente.
@@ -37,7 +37,7 @@ const FaqScreen: React.FC = () => {
           >
             <p>
               Você pode cancelar sua assinatura a qualquer momento, basta ir até
-              a seção de "Minha Conta" e clicar em Cancelar Assinatura. Depois
+              a seção de `Minha Conta` e clicar em Cancelar Assinatura. Depois
               disso, sua assinatura será cancelada e você não será mais cobrado.
             </p>
           </div>
