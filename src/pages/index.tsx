@@ -7,7 +7,7 @@ import { SessionManager } from "@/utils/session-manager";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(SessionManager.hasToken());
   useEffect(() => {
     setLoggedIn(SessionManager.hasToken());
     if (!loggedIn) {
