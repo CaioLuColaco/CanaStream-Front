@@ -1,6 +1,5 @@
-
-import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
+/* eslint-disable @next/next/no-img-element */
+import styles from '@/styles/musics.module.css'
 import Navbar from '../components/Navbar'
 import Footer from "@/components/footer"
 import { useRouter } from "next/router";
@@ -8,42 +7,31 @@ import { useRouter } from "next/router";
 export default function Musics() {
     
   const router = useRouter();
-  const { id } = router.query;
+  const { id, title, img, songs } = router.query;
+  const songsObject = typeof songs === 'string' ? JSON.parse(songs) : [];
 
-    const mockData = [
-        {
-          id: 1,
-          imgSrc: "https://images-az.suamusica.com.br/FSekzmqBFR8Crla_u5gVqmHnl6M=/500x500/filters:format(webp)/34309618/3835030/cd_cover.jpg",
-          title: "Forró",
-        },
-        {
-          id: 2,
-          imgSrc: "https://i.ytimg.com/vi/ES_fjLSceQ0/maxresdefault.jpg",
-          title: "Sofrência",
-        },
-        {
-          id: 3,
-          imgSrc: "https://akamai.sscdn.co/uploadfile/letras/albuns/a/7/b/0/978631602590790.jpg",
-          title: "Aleatórias",
-        },
-        {
-          id: 4,
-          imgSrc: "https://assets.dragoart.com/images/9437_501/how-to-draw-death-bat-avenged-sevenfold-deathbat_5e4c93d2c082e0.70709734_41473_3_3.jpg",
-          title: "Rockzão",
-        },
-        {
-          id: 5,
-          imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Metallica_logo.png/800px-Metallica_logo.png",
-          title: "Old Songs",
-        }
-      ];
-      
   return (
     <>
     <main className={styles.main} style={{backgroundColor: '#101C27'}}>
         <Navbar/>
-        <div className={styles.title}>
-            <h1>Musicas da playlist {id}</h1>
+        <div>
+            <div className={styles.Container}>
+              <div>
+                <h1 className={styles.title}>Playlist {title}</h1>
+                <div className={styles.ImgBox}>
+                  <img className={styles.Logo} src={img as string} alt='' />
+                </div>
+              </div>
+              <div style={{width: '50rem'}}>
+                <h1 className={styles.title2}>Musicas da playlist {title}</h1>
+                <ul style={{margin: '0', padding: '0'}}>
+                  {songsObject.map((song:any) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <li className={styles.item}>{song.title}<br/>{song.artist}</li>
+                  ))}
+                </ul>                
+              </div>
+            </div>
         </div>
         <Footer />
       </main>
