@@ -53,9 +53,9 @@ export default function Musics() {
                 pathname: '/musics/',
                 query: {
                   id: playlist.id,
-                  title: playlist.name,
+                  name: playlist.name,
                   img: playlist.imgUrl,
-                  songs: JSON.stringify(playlist.musics),
+                  musics: JSON.stringify(playlist.musics),
                 },
               }}
               style={{ textDecoration: 'none' }}
@@ -89,7 +89,7 @@ export default function Musics() {
               {filteredMusics.map((music) => (
                 <li key={music.id} className={styles.item2}>
                   <div>
-                    {music.name} - {music.Artist}
+                    {music.name}
                   </div>
                   <button className={styles.Adicionar}>Adicionar</button>                
                 </li>

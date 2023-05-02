@@ -35,7 +35,7 @@ export default function Musics() {
                 </div>
               </div>
               <div style={{width: '50rem'}}>
-                <h1 className={styles.title2}>Musicas da playlist {name}</h1>
+                <h1 className={styles.title}>Musicas da playlist {name}</h1>
                 <ul style={{margin: '0', padding: '0'}}>
                   {songsObject.map((song:any) => (
                     // eslint-disable-next-line react/jsx-key
