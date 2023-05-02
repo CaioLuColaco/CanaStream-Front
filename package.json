@@ -30,6 +30,7 @@
     "child_process": false
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.3",
     "@types/jsonwebtoken": "^9.0.1"
   }
 }
