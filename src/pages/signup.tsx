@@ -1,4 +1,5 @@
 import * as crypto from "crypto";
+import axios from 'axios';
 import React, { useState } from "react";
 import styles from "@/styles/signup.module.css";
 import Navbar from "@/components/Navbar";
@@ -16,21 +17,27 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [emailConfirm, setEmailConfirm] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (email == emailConfirm && passwordConfirm == password) {
-      const hashedPassword = PasswordManager.generateHash(password);
-      saveUserToLocalStorage({ username, email, password: hashedPassword });
-      alert("usuario cadastrado");
+    if (email == emailConfirm && passwordConfirmation == password) {
+      try {
+        const response = await axios.post('http://localhost:3001/users', {
+          email,
+          username,
+          password,
+          passwordConfirmation
+        });
+        
+        window.alert("Deu certo")
+      } catch (error) {
+  
+        window.alert("Deu errado")      
+      }
     } else {
       alert("erro nas confimações.");
     }
-  };
-
-  const saveUserToLocalStorage = (userData: User) => {
-    localStorage.setItem(userData.username, JSON.stringify(userData));
   };
 
   return (
@@ -86,8 +93,8 @@ export default function SignUp() {
             <input
               className={styles.input}
               type="password"
-              value={passwordConfirm}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
+              value={passwordConfirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
               required
             />
           </label>

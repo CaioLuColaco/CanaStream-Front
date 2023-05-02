@@ -2,30 +2,31 @@ import React, { useState } from "react";
 import styles from "@/styles/login.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
-import { PasswordManager } from "@/utils/password-manager";
+import axios from 'axios';
 import { SessionManager } from "@/utils/session-manager";
 
 export default function Login() {
-  const [usernameInput, setUsernameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const userDataStr = localStorage.getItem(usernameInput);
-    if (!userDataStr) {
-      alert("Usuário não encontrado");
-      return;
-    }
-    const { password: userHashedPassword, username } = JSON.parse(userDataStr);
-    if (PasswordManager.passwordsMatch(passwordInput, userHashedPassword)) {
-      const token: string = SessionManager.generateToken(username);
-      SessionManager.setToken(token);
-      SessionManager.redirect("/");
-    } else {
-      alert("Senha incorreta!");
+    try {
+      const response = await axios.post('http://localhost:3001/auth/login', {
+        email,
+        password
+      });
+
+      window.alert(response.status)
+      window.alert("Deu certo")
+      if(response.status == 200){
+        SessionManager.redirect("/");
+      }
+    } catch (error) {
+      window.alert("Deu errado")      
     }
   };
-
+    // status code do response == 201
   return (
     <>
       <Navbar />
@@ -37,8 +38,8 @@ export default function Login() {
               className={styles.input}
               placeholder=""
               type="text"
-              value={usernameInput}
-              onChange={(e) => setUsernameInput(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </label>
@@ -47,8 +48,8 @@ export default function Login() {
             <input
               className={styles.input}
               type="password"
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </label>
