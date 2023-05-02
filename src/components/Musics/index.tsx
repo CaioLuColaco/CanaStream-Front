@@ -1,77 +1,73 @@
-import styles from "@/styles/musics.module.css";
-import Link from "next/link";
-
-
-const mockData = [  
-  {    
-    id: 1,    
-    imgSrc: "https://images-az.suamusica.com.br/FSekzmqBFR8Crla_u5gVqmHnl6M=/500x500/filters:format(webp)/34309618/3835030/cd_cover.jpg",    
-    title: "Forró",    
-    songs: [
-      { title: "Xote dos Milagres", artist: "Falamansa" },      
-      { title: "Ai Se Eu Te Pego", artist: "Michel Teló" },      
-      { title: "Esperando na Janela", artist: "Cavaleiros do Forró" }    
-    ]
-  },
-  {
-    id: 2,
-    imgSrc: "https://i.ytimg.com/vi/ES_fjLSceQ0/maxresdefault.jpg",
-    title: "Sofrência",
-    songs: [
-      { title: "50 Reais", artist: "Naiara Azevedo" },
-      { title: "Dona Maria", artist: "Thiago Brava" },
-      { title: "Amor Falso", artist: "Wesley Safadão" }
-    ]
-  },
-  {
-    id: 3,
-    imgSrc: "https://akamai.sscdn.co/uploadfile/letras/albuns/a/7/b/0/978631602590790.jpg",
-    title: "Aleatórias",
-    songs: [
-      { title: "Happy", artist: "Pharrell Williams" },
-      { title: "Shallow", artist: "Lady Gaga, Bradley Cooper" },
-      { title: "Blinding Lights", artist: "The Weeknd" }
-    ]
-  },
-  {
-    id: 4,
-    imgSrc: "https://assets.dragoart.com/images/9437_501/how-to-draw-death-bat-avenged-sevenfold-deathbat_5e4c93d2c082e0.70709734_41473_3_3.jpg",
-    title: "Rockzão",
-    songs: [
-      { title: "Enter Sandman", artist: "Metallica" },
-      { title: "Sweet Child O' Mine", artist: "Guns N' Roses" },
-      { title: "Highway to Hell", artist: "AC/DC" }
-    ]
-  },
-  {
-    id: 5,
-    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Metallica_logo.png/800px-Metallica_logo.png",
-    title: "Old Songs",
-    songs: [
-      { title: "Bohemian Rhapsody", artist: "Queen" },
-      { title: "Stairway to Heaven", artist: "Led Zeppelin" },
-      { title: "Hotel California", artist: "Eagles" }
-    ]
-  }
-];
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import styles from '@/styles/musics.module.css';
+import Link from 'next/link';
+import { api } from '@/pages/api/axios';
+import Modal from '../Modal';
 
 
 export default function Musics() {
+  const [playlists, setPlaylists] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    api.get('/playlists')
+      .then((response) => setPlaylists(response.data))
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
-    <div style={{ backgroundColor: "#101C27", textDecoration: 'none' }}>
+    <div style={{ backgroundColor: '#101C27', textDecoration: 'none' }}>
       <div className={styles.title}>
         <h1>Playlists</h1>
       </div>
       <div className={styles.boxMusics}>
-        {mockData.map((music) => (
-          <div key={music.id} className={styles.music}>
-            <Link href={{ pathname: "/musics/", query: { id: music.id, title: music.title, img: music.imgSrc, songs: JSON.stringify(music.songs) } }} style={{textDecoration: 'none'}}>
-                <img src={music.imgSrc} />
-                <h3>{music.title}</h3>
+        {playlists.map((playlist) => (
+          <div key={playlist.id} className={styles.music}>
+            <Link
+              href={{
+                pathname: '/musics/',
+                query: {
+                  id: playlist.id,
+                  title: playlist.name,
+                  // img: playlist.imgSrc,
+                  songs: JSON.stringify(playlist.musics),
+                },
+              }}
+              style={{ textDecoration: 'none' }}
+            >
+              <img src={playlist.imgSrc} />
+              <h3>{playlist.name}</h3>
             </Link>
           </div>
         ))}
       </div>
+      <div className={styles.CriarPlaylist}>
+        <button
+          className={styles.botaoPlaylist}
+          onClick={handleModal}
+        >
+          Criar Playlist
+        </button>
+      </div>
+      {showModal && (
+        <Modal handleClose={handleModal}>
+          <h2>Criar Playlist</h2>
+          <form>
+            <label>
+              Nome da playlist:
+            </label>
+              <input type="text" />
+            <button type="submit">Criar</button>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }
