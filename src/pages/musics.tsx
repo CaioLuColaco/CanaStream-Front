@@ -19,8 +19,8 @@ export default function Musics() {
   };
     
   const router = useRouter();
-  const { id, title, img, songs } = router.query;
-  const songsObject = typeof songs === 'string' ? JSON.parse(songs) : [];
+  const { id, name, img, musics } = router.query;
+  const songsObject = typeof musics === 'string' ? JSON.parse(musics) : [];
 
   return (
     <>
@@ -29,21 +29,20 @@ export default function Musics() {
         <div>
             <div className={styles.Container}>
               <div>
-                <h1 className={styles.title}>Playlist {title}</h1>
+                <h1 className={styles.title}>Playlist {name}</h1>
                 <div className={styles.ImgBox}>
                   <img className={styles.Logo} src={img as string} alt='' />
                 </div>
               </div>
               <div style={{width: '50rem'}}>
-                <h1 className={styles.title2}>Musicas da playlist {title}</h1>
+                <h1 className={styles.title2}>Musicas da playlist {name}</h1>
                 <ul style={{margin: '0', padding: '0'}}>
                   {songsObject.map((song:any) => (
                     // eslint-disable-next-line react/jsx-key
-                    <li onClick={handlePlay} className={styles.item}>{song.title}<br/>{song.artist}</li>
+                    <li className={styles.item}>{song.title}<br/>{song.artist}</li>
                   ))}
                 </ul>                
               </div>
-              <ReactPlayer url={"https://www.youtube.com/watch?v=zrAbVnBbEYw"} playing={playing} />
             </div>
         </div>
         <Footer />

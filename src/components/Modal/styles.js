@@ -39,4 +39,14 @@ export const Content = styled.div`
 export const Botao = styled.button`
   width: 20%;
   align-self: flex-end;
+  margin-right: 2%;
+  background-color: #011E36;
+  color: #fff;
+  border-radius: .5rem;
+  height: 2rem;
+
+  &:hover{
+    background-color: #fff;
+    color: #011E36;
+  }
 `;

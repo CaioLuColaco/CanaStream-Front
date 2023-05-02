@@ -61,6 +61,40 @@
     color: #000
 }
 
+.item2{
+    padding: 2%;
+    color: #000;
+    border: 1px solid #000;
+    border-bottom: none;
+    list-style-type: none;    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item2:last-child{
+    border-bottom: 1px solid #000
+} 
+
+.item2:hover{
+    background-color: #011E36;
+    color: #fff
+}
+
+.Adicionar{
+    border: 1px solid #fff;
+    background-color: #011E36;
+    color: #fff;
+    height: 2rem;
+    border-radius: .3rem;
+}
+
+.Adicionar:hover{
+    border: none;
+    background-color: #f4f4f4;
+    color: #011E36;
+}
+
 .boxMusics {
     padding: 3rem;
     display: grid;
@@ -89,4 +123,8 @@
     font-family: TitilliumWeb-Regular, 'Titillium Web';
     color: white;
     text-decoration: none;
+}
+
+.ListaMusicasPlaylist{
+    padding: 2%
 }
