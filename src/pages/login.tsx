@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import cookie from "js-cookie";
 import styles from "@/styles/login.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
-import axios from 'axios';
 import { SessionManager } from "@/utils/session-manager";
+import { api } from "./api/axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,21 +13,21 @@ export default function Login() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/auth/login', {
+      const response = await api.post("/auth/login", {
         email,
-        password
+        password,
       });
 
-      window.alert(response.status)
-      window.alert("Deu certo")
-      if(response.status == 200){
+      window.alert(response.status);
+      window.alert("Deu certo");
+      if (response.status == 200) {
+        cookie.set("token", response.data.token);
         SessionManager.redirect("/");
       }
     } catch (error) {
-      window.alert("Deu errado")      
+      window.alert("Deu errado");
     }
   };
-    // status code do response == 201
   return (
     <>
       <Navbar />
