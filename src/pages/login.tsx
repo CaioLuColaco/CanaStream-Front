@@ -25,6 +25,7 @@ export default function Login() {
         SessionManager.redirect("/");
       }
     } catch (error) {
+      window.alert(error);
       window.alert("Deu errado");
     }
   };
@@ -34,7 +35,7 @@ export default function Login() {
       <div className={styles.form_wrapper}>
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label}>
-            Nome de usuário
+            Email
             <input
               className={styles.input}
               placeholder=""
