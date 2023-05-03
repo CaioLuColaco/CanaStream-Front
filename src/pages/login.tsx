@@ -18,8 +18,6 @@ export default function Login() {
         password,
       });
 
-      window.alert(response.status);
-      window.alert("Deu certo");
       if (response.status == 200) {
         cookie.set("token", response.data.token);
         SessionManager.redirect("/");
