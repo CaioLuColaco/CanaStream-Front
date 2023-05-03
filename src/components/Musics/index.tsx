@@ -1,25 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from '@/styles/musics.module.css';
-import Link from 'next/link';
-import { api } from '@/pages/api/axios';
-import Modal from '../Modal';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import styles from "@/styles/musics.module.css";
+import Link from "next/link";
+import { api } from "@/pages/api/axios";
+import Modal from "../Modal";
 
 export default function Musics() {
   const [playlists, setPlaylists] = useState([]);
   const [musics, setMusics] = useState([]);
   const [filteredMusics, setFilteredMusics] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    api.get('/playlists')
+    api
+      .get("/playlists")
       .then((response) => setPlaylists(response.data))
       .catch((error) => console.log(error));
 
-    api.get('/musics')
+    api
+      .get("/musics")
       .then((response) => setMusics(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -41,7 +43,7 @@ export default function Musics() {
   };
 
   return (
-    <div style={{ backgroundColor: '#101C27', textDecoration: 'none' }}>
+    <div style={{ backgroundColor: "#101C27", textDecoration: "none" }}>
       <div className={styles.title}>
         <h1>Playlists</h1>
       </div>
@@ -50,7 +52,7 @@ export default function Musics() {
           <div key={playlist.id} className={styles.music}>
             <Link
               href={{
-                pathname: '/musics/',
+                pathname: "/musics/",
                 query: {
                   id: playlist.id,
                   name: playlist.name,
@@ -58,7 +60,7 @@ export default function Musics() {
                   musics: JSON.stringify(playlist.musics),
                 },
               }}
-              style={{ textDecoration: 'none' }}
+              style={{ textDecoration: "none" }}
             >
               <img src={playlist.imgUrl} />
               <h3>{playlist.name}</h3>
@@ -84,14 +86,12 @@ export default function Musics() {
                 onChange={handleSearchTermChange}
               />
             </form>
-            <h1 style={{ color: '#000' }}>Músicas disponíveis</h1>
-            <ul style={{ margin: '0', padding: '0' }}>
+            <h1 style={{ color: "#000" }}>Músicas disponíveis</h1>
+            <ul style={{ margin: "0", padding: "0" }}>
               {filteredMusics.map((music) => (
                 <li key={music.id} className={styles.item2}>
-                  <div>
-                    {music.name}
-                  </div>
-                  <button className={styles.Adicionar}>Adicionar</button>                
+                  <div>{music.name}</div>
+                  <button className={styles.Adicionar}>Adicionar</button>
                 </li>
               ))}
             </ul>
