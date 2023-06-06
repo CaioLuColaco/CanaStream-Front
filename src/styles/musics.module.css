@@ -21,6 +21,30 @@
     margin-bottom: 0.75rem
 }
 
+.Labels{
+    font-size: 1.2rem
+}
+
+.Labels2{
+    font-size: 1rem
+}
+
+.Criar{
+    border: 1px solid #fff;
+    background-color: #011E36;
+    color: #fff;
+    height: 2rem;
+    margin: 1rem;
+    width: 100%;
+    border-radius: .7rem;
+}
+
+.Criar:hover{
+    border: 2px solid #011E36;
+    background-color: #fff;
+    color: #011E36;
+}
+
 .Container{
     margin-top: 5%;
     display: grid;

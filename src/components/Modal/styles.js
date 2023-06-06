@@ -14,7 +14,7 @@ export const Modal = styled.div`
   z-index: 5;
   background-color: #fff;
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 25%;
   width: 50%;
   height: auto;
@@ -27,10 +27,11 @@ export const Modal = styled.div`
 `;
 
 export const Content = styled.div`
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 35rem;
   padding: 3%;
   padding-left: 10%;
   padding-right: 10%;

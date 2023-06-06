@@ -13,6 +13,26 @@ export default function Musics() {
   const [filteredMusics, setFilteredMusics] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedMusicIds, setSelectedMusicIds] = useState([]);
+  const [name, setName] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+
+    const handleCreatePlaylist = () => {
+      const payload = {
+        name: name,
+        imgUrl: imgUrl,
+        musics: selectedMusicIds
+      };
+
+      api.post('/playlists', payload)
+        .then(response => {
+          console.log('Playlist criada com sucesso:', response.data);
+          window.alert('Playlist Criada');
+        })
+        .catch(error => {
+          console.error('Erro ao criar a playlist:', error);
+        });
+    };
 
   useEffect(() => {
     api
@@ -42,6 +62,10 @@ export default function Musics() {
     setSearchTerm(event.target.value);
   };
 
+  const handleAddMusic = (musicId) => {
+    setSelectedMusicIds([...selectedMusicIds, musicId]);
+  };
+  
   return (
     <div style={{ backgroundColor: "#101C27", textDecoration: "none" }}>
       <div className={styles.title}>
@@ -76,10 +100,31 @@ export default function Musics() {
       {showModal && (
         <Modal handleClose={handleModal}>
           <div className={styles.ListaMusicasPlaylist}>
-            <h2>Criar Playlist</h2>
-            <form>
-              <label htmlFor="searchInput">Nome da música:</label>
+            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', height: '3rem'}}>
+              <h2>Criar Playlist</h2>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <label className={styles.Labels2}>Nome da playlist:</label>
+                <input
+                  style={{ height: '1.5rem' }}
+                  type="text"
+                  value={name}
+                  onChange={event => setName(event.target.value)}
+                />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column'}}>
+                <label className={styles.Labels2}>URL da imagem:</label>
+                <input
+                  style={{ height: '1.5rem' }}
+                  type="text"
+                  value={imgUrl}
+                  onChange={event => setImgUrl(event.target.value)}
+                />
+              </div>
+            </div>
+            <form style={{marginTop: '5%', display: 'flex', gap: '1rem', flexDirection: 'column'}}>
+              <label className={styles.Labels} htmlFor="searchInput">Pesquisar nome da música:</label>
               <input
+                style={{width: '40%', height: '2rem'}}
                 type="text"
                 id="searchInput"
                 value={searchTerm}
@@ -91,10 +136,13 @@ export default function Musics() {
               {filteredMusics.map((music) => (
                 <li key={music.id} className={styles.item2}>
                   <div>{music.name}</div>
-                  <button className={styles.Adicionar}>Adicionar</button>
+                  <button className={styles.Adicionar} onClick={() => handleAddMusic(music.id)}>Adicionar</button>
                 </li>
               ))}
             </ul>
+          </div>
+          <div style={{display: 'flex', width: '100%'}}>
+            <button onClick={handleCreatePlaylist} className={styles.Criar}>Criar playlist</button>
           </div>
         </Modal>
       )}
