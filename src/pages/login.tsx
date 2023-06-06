@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import cookie from "js-cookie";
+  import cookie from "js-cookie";
 import styles from "@/styles/login.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
