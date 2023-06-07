@@ -21,7 +21,7 @@ export default function Navbar(props) {
                 {isLoggedIn? <Link href='/' className={styles.link}>Home</Link> : ""}
                 <Link href='/faq' className={styles.link}>FAQ</Link>
                 <Link href='/signup' className={styles.link}>Cadastro</Link>
-                <Link href='/user' className={styles.link}>User</Link>
+                <Link href='/userUpdate' className={styles.link}>editar perfil</Link>
 
                 {isLoggedIn? <Link href='/logout' className={styles.link}>Sair</Link> : <Link href='/login' className={styles.link}>Entrar</Link>}
             </div>

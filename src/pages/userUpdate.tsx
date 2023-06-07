@@ -3,19 +3,24 @@ import Footer from "@/components/footer";
 import { useState } from "react";
 import styles from "@/styles/login.module.css";
 import { api } from "./api/axios";
-import cookie from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 
-function User() {
+function UserUpdate() {
     const [currentPassword, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
 
     const handleSubmit = async () => {
-        alert(cookie.get("token"));
+        let token = localStorage.getItem("token");
+
+        if (!token)
+            token = "";
+        const tokenD = jwtDecode(token);
+        
         try {
-            const response = await api.put(`/users/${cookie.get("token")}`, {
+            const response = await api.put(`/users/${tokenD.id}`, {
                 email,
                 username,
                 newPassword,
@@ -75,7 +80,7 @@ function User() {
                     </label>
 
                     <button className={styles.button_submit} onClick={handleSubmit}>
-                        Trocar
+                        editar perfil
                     </button>
                 </form>
             </div>
@@ -84,4 +89,4 @@ function User() {
     );
 }
 
-export default User;
+export default UserUpdate;

@@ -19,6 +19,8 @@ export default function Login() {
       });
 
       if (response.status == 200) {
+        
+        SessionManager.setToken(response.data.token);
         cookie.set("token", response.data.token);
         SessionManager.redirect("/");
       }
