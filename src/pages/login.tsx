@@ -1,33 +1,17 @@
 import React, { useState } from "react";
-  import cookie from "js-cookie";
 import styles from "@/styles/login.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
-import { SessionManager } from "@/utils/session-manager";
-import { api } from "./api/axios";
+import { useAuth } from "@/context/auth-context";
 
 export default function Login() {
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      const response = await api.post("/auth/login", {
-        email,
-        password,
-      });
-
-      if (response.status == 200) {
-        
-        SessionManager.setToken(response.data.token);
-        cookie.set("token", response.data.token);
-        SessionManager.redirect("/");
-      }
-    } catch (error) {
-      window.alert(error);
-      window.alert("Deu errado");
-    }
+    await signIn({ email, password });
   };
   return (
     <>
