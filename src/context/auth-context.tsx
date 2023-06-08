@@ -4,13 +4,7 @@ import { User } from "@/types/user";
 import jwtDecode from "jwt-decode";
 import Router from "next/router";
 import { setCookie, destroyCookie, parseCookies } from "nookies";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: User | null;
@@ -27,13 +21,19 @@ export function useAuth(): AuthContextType {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    const { "auth.token": token } = parseCookies();
-    if (token) {
-      const loggedUser: User = jwtDecode(token);
-      AuthService.getLoggedUser(loggedUser.id).then((res) => setUser(res));
+    try {
+      const { "auth.token": token } = parseCookies();
+      if (token) {
+        const loggedUser: User = jwtDecode(token);
+        AuthService.getLoggedUser(loggedUser.id).then((res) => setUser(res));
+      }
+    } catch (e) {
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
-      {children}
+      {loading ? null : children}
     </AuthContext.Provider>
   );
 }
