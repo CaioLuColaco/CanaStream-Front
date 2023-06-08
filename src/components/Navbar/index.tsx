@@ -2,10 +2,9 @@ import { useAuth } from "@/context/auth-context";
 import styles from "@/styles/navbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, signOut } = useAuth();
 
   return (
     <div className={styles.box}>
@@ -37,7 +36,7 @@ export default function Navbar() {
         )}
 
         {isAuthenticated ? (
-          <Link href="/logout" className={styles.link}>
+          <Link onClick={signOut} className={styles.link} href={""}>
             Sair
           </Link>
         ) : (
