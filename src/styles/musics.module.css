@@ -1,5 +1,4 @@
 .main {
-    height: 90vh;
     width: 100vw;
 }
 
@@ -84,12 +83,50 @@
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
     list-style-type: none;    
+    display: flex;
+    width: 100%;
+    justify-content: space-between
 }
 
-.item:hover{
+.item p{
+    margin: 0;
+}
+
+.buttonsBox{
+    display: flex;
+    gap: 20px
+}
+
+.buttonsBox button{
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px
+}
+
+.buttonsBox button:first-child{
+    background-color: green;
+}
+.buttonsBox button:last-child{
+    background-color: red;
+}
+
+.buttonsBox button:last-child:hover{
+    background-color: white;
+    color: red;
+}
+
+.buttonsBox button:first-child:hover{
+    background-color: white;
+    color: green;
+}
+
+/* .item:hover{
     background-color: #fff;
     color: #000
-}
+} */
 
 .item2{
     padding: 2%;

@@ -4,12 +4,13 @@ import Navbar from "../components/Navbar";
 import Footer from "@/components/footer";
 import { useRouter } from "next/router";
 import ReactPlayer from "react-player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "@/pages/api/axios";
 
 export default function Musics() {
   const [playing, setPlaying] = useState(false);
 
-  const handlePlay = () => {
+  const handlePlay = (url: string) => {
     setPlaying(true);
   };
 
@@ -17,9 +18,16 @@ export default function Musics() {
     setPlaying(false);
   };
 
+  const removeMusic = (id: string) => {
+    api.post(`/playlist/${id}`).then((res) => window.location.reload()).catch((error) => console.log(error))
+  }
+
   const router = useRouter();
   const { id, name, img, musics } = router.query;
   const songsObject = typeof musics === "string" ? JSON.parse(musics) : [];
+  useEffect(() => {
+    console.log(songsObject)
+  })
 
   return (
     <>
@@ -36,10 +44,13 @@ export default function Musics() {
             <div style={{ width: "50rem" }}>
               <h1 className={styles.title}>Musicas da playlist {name}</h1>
               <ul style={{ margin: "0", padding: "0" }}>
-                {songsObject.map((music) => (
+                {songsObject.map((music: any) => (
                   <li key={music.id} className={styles.item}>
-                    {music.name}
-                    <br />
+                    <p>{music.name}</p>
+                    <div className={styles.buttonsBox}>
+                      <button onClick={() => handlePlay(music.url)}>Play</button>
+                      <button onClick={() => removeMusic(music.id)}>Remover</button>
+                    </div>
                   </li>
                 ))}
               </ul>
