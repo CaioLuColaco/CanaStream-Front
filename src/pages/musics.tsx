@@ -159,7 +159,7 @@ const handleAddMusic = (musicId) => {
             <Modal handleClose={handleModal}>
               <div className={styles.ListaMusicasPlaylist}>
                 <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', height: '3rem'}}>
-                  <h2>Criar Playlist</h2>
+                  <h2>Adicionar músicas</h2>
                 </div>
                 <form style={{marginTop: '5%', display: 'flex', gap: '1rem', flexDirection: 'column'}}>
                   <label className={styles.Labels} htmlFor="searchInput">Pesquisar nome da música:</label>
