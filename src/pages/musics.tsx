@@ -9,8 +9,13 @@ import { api } from "@/pages/api/axios";
 
 export default function Musics() {
   const [playing, setPlaying] = useState(false);
+  const [musicsPlaylist, setMusicsPlaylist] = useState([])
+  const [urlPlaying, setUrlPlaying] = useState("")
+  const router = useRouter();
+  const { id, name, img, musics } = router.query;
 
   const handlePlay = (url: string) => {
+    setUrlPlaying(url)
     setPlaying(true);
   };
 
@@ -18,16 +23,45 @@ export default function Musics() {
     setPlaying(false);
   };
 
-  const removeMusic = (id: string) => {
-    api.post(`/playlist/${id}`).then((res) => window.location.reload()).catch((error) => console.log(error))
+  const removeMusic = (musicId: string) => {
+    const objetoMusics = JSON.parse(musics)
+
+    const selectedMusicIds = []
+
+    for (const music in objetoMusics) {
+      if (objetoMusics[music].id !== musicId) {
+        selectedMusicIds.push(objetoMusics[music].id);
+      }
+    }
+
+    const payload = {
+      musics: selectedMusicIds
+    };
+
+    api.put(`/playlists/${id}`, payload).then((res) => window.location.assign("/")).catch((error) => console.log(error))
   }
 
-  const router = useRouter();
-  const { id, name, img, musics } = router.query;
   const songsObject = typeof musics === "string" ? JSON.parse(musics) : [];
-  useEffect(() => {
-    console.log(songsObject)
-  })
+
+
+  const Tocador = (url) => {
+    console.log(url.url)
+    return (
+      <ReactPlayer
+        url={url.url}
+        playing
+        controls={true}
+        config={{
+          file: {
+            attributes: {
+              controlsList: 'nodownload', // Impede que o usuário faça o download do arquivo
+              style: { display: 'none' } // Esconde o player de vídeo
+            }
+          }
+        }}
+      />
+    )
+  }
 
   return (
     <>
@@ -56,6 +90,14 @@ export default function Musics() {
               </ul>
             </div>
           </div>
+        </div>
+        <div className={styles.musicBox}>
+          {playing && (
+            <div className={styles.musicCenter}>
+              <h2>Central de música</h2>
+              <Tocador url={urlPlaying} />
+            </div>
+          )}
         </div>
         <Footer />
       </main>

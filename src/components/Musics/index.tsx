@@ -23,6 +23,8 @@ export default function Musics() {
         imgUrl: imgUrl,
         musics: selectedMusicIds
       };
+      console.log("payload:")
+      console.log(payload)
 
       api.post('/playlists', payload)
         .then(response => {
@@ -72,7 +74,7 @@ export default function Musics() {
         <h1>Playlists</h1>
       </div>
       <div className={styles.boxMusics}>
-        {playlists.map((playlist) => (
+        {playlists.map((playlist: any) => (
           <div key={playlist.id} className={styles.music}>
             <Link
               href={{

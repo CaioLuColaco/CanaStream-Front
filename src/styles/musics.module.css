@@ -123,11 +123,6 @@
     color: green;
 }
 
-/* .item:hover{
-    background-color: #fff;
-    color: #000
-} */
-
 .item2{
     padding: 2%;
     color: #000;
@@ -194,4 +189,13 @@
 
 .ListaMusicasPlaylist{
     padding: 2%
+}
+
+.musicCenter{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white
 }
