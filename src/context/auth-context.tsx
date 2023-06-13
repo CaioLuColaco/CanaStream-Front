@@ -51,6 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function signOut(): Promise<void> {
     destroyCookie(undefined, "auth.token");
     Router.push("/login");
+    window.location.reload();
   }
 
   return (
