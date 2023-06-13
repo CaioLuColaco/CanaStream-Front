@@ -20,22 +20,25 @@ export default function Musics() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedMusicIds, setSelectedMusicIds] = useState([]);
 
-  const handleCreatePlaylist = () => {
+  const handleCreateFinish = () => {
+    const objetoMusics = JSON.parse(musics)
+    const finishedMusicIds = selectedMusicIds
+    
+    for (const music in objetoMusics) {
+      const elementoEncontrado = finishedMusicIds.find(item => item === objetoMusics[music].id)
+      if (elementoEncontrado !== undefined) {
+        console.log("O elemento está presente no array");
+      } else {
+        finishedMusicIds.push(objetoMusics[music].id)
+      }
+    }
+    // finishedMusicIds.pop()
     const payload = {
       name: name,
-      musics: selectedMusicIds
+      musics: finishedMusicIds
     };
-    console.log("payload:")
-    console.log(payload)
 
-    api.post('/playlists', payload)
-      .then(response => {
-        console.log('Playlist criada com sucesso:', response.data);
-        window.alert('Playlist Criada');
-      })
-      .catch(error => {
-        console.error('Erro ao criar a playlist:', error);
-      });
+    api.put(`/playlists/${id}`, payload).then((res) => window.location.assign("/")).catch((error) => console.log(error))
   };
 
 useEffect(() => {
@@ -62,7 +65,13 @@ const handleSearchTermChange = (event) => {
 };
 
 const handleAddMusic = (musicId) => {
-  setSelectedMusicIds([...selectedMusicIds, musicId]);
+  const elementoEncontrado = selectedMusicIds.find(item => item === musicId)
+  if (elementoEncontrado !== undefined) {
+    console.log("O elemento está presente no array");
+  } else {
+    setSelectedMusicIds([...selectedMusicIds, musicId]);
+  }
+  console.log(selectedMusicIds)
 };
 
   const handlePlay = (url: string) => {
@@ -77,16 +86,16 @@ const handleAddMusic = (musicId) => {
   const removeMusic = (musicId: string) => {
     const objetoMusics = JSON.parse(musics)
 
-    const selectedMusicIds = []
+    const selectedRemoveMusicIds = []
 
     for (const music in objetoMusics) {
       if (objetoMusics[music].id !== musicId) {
-        selectedMusicIds.push(objetoMusics[music].id);
+        selectedRemoveMusicIds.push(objetoMusics[music].id);
       }
     }
 
     const payload = {
-      musics: selectedMusicIds
+      musics: selectedRemoveMusicIds
     };
 
     api.put(`/playlists/${id}`, payload).then((res) => window.location.assign("/")).catch((error) => console.log(error))
@@ -96,7 +105,6 @@ const handleAddMusic = (musicId) => {
 
 
   const Tocador = (url) => {
-    console.log(url.url)
     return (
       <ReactPlayer
         url={url.url}
@@ -144,7 +152,7 @@ const handleAddMusic = (musicId) => {
           <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
           <div className={styles.CriarPlaylist}>
             <button className={styles.botaoPlaylist} onClick={handleModal}>
-              Criar Playlist
+              Adicionar músicas
             </button>
           </div>
           {showModal && (
@@ -174,7 +182,7 @@ const handleAddMusic = (musicId) => {
                 </ul>
               </div>
               <div style={{display: 'flex', width: '100%'}}>
-                <button onClick={handleCreatePlaylist} className={styles.Criar}>Criar playlist</button>
+                <button onClick={handleCreateFinish} className={styles.Criar}>Finalizar</button>
               </div>
             </Modal>
           )}
