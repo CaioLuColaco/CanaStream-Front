@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { api } from "@/pages/api/axios";
+import Modal from "@/components/Modal";
 
 export default function Musics() {
   const [playing, setPlaying] = useState(false);
@@ -13,6 +14,56 @@ export default function Musics() {
   const [urlPlaying, setUrlPlaying] = useState("")
   const router = useRouter();
   const { id, name, img, musics } = router.query;
+  const [songs, setSongs] = useState([]);
+  const [filteredMusics, setFilteredMusics] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedMusicIds, setSelectedMusicIds] = useState([]);
+
+  const handleCreatePlaylist = () => {
+    const payload = {
+      name: name,
+      musics: selectedMusicIds
+    };
+    console.log("payload:")
+    console.log(payload)
+
+    api.post('/playlists', payload)
+      .then(response => {
+        console.log('Playlist criada com sucesso:', response.data);
+        window.alert('Playlist Criada');
+      })
+      .catch(error => {
+        console.error('Erro ao criar a playlist:', error);
+      });
+  };
+
+useEffect(() => {
+  api
+    .get("/musics")
+    .then((response) => setSongs(response.data))
+    .catch((error) => console.log(error));
+}, []);
+
+useEffect(() => {
+  setFilteredMusics(
+    songs.filter((music) =>
+      music.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+}, [searchTerm, songs]);
+
+const handleModal = () => {
+  setShowModal(!showModal);
+};
+
+const handleSearchTermChange = (event) => {
+  setSearchTerm(event.target.value);
+};
+
+const handleAddMusic = (musicId) => {
+  setSelectedMusicIds([...selectedMusicIds, musicId]);
+};
 
   const handlePlay = (url: string) => {
     setUrlPlaying(url)
@@ -89,6 +140,44 @@ export default function Musics() {
                 ))}
               </ul>
             </div>
+          </div>
+          <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
+          <div className={styles.CriarPlaylist}>
+            <button className={styles.botaoPlaylist} onClick={handleModal}>
+              Criar Playlist
+            </button>
+          </div>
+          {showModal && (
+            <Modal handleClose={handleModal}>
+              <div className={styles.ListaMusicasPlaylist}>
+                <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', height: '3rem'}}>
+                  <h2>Criar Playlist</h2>
+                </div>
+                <form style={{marginTop: '5%', display: 'flex', gap: '1rem', flexDirection: 'column'}}>
+                  <label className={styles.Labels} htmlFor="searchInput">Pesquisar nome da música:</label>
+                  <input
+                    style={{width: '40%', height: '2rem'}}
+                    type="text"
+                    id="searchInput"
+                    value={searchTerm}
+                    onChange={handleSearchTermChange}
+                  />
+                </form>
+                <h1 style={{ color: "#000" }}>Músicas disponíveis</h1>
+                <ul style={{ margin: "0", padding: "0" }}>
+                  {filteredMusics.map((music) => (
+                    <li key={music.id} className={styles.item2}>
+                      <div>{music.name}</div>
+                      <button className={styles.Adicionar} onClick={() => handleAddMusic(music.id)}>Adicionar</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div style={{display: 'flex', width: '100%'}}>
+                <button onClick={handleCreatePlaylist} className={styles.Criar}>Criar playlist</button>
+              </div>
+            </Modal>
+          )}
           </div>
         </div>
         <div className={styles.musicBox}>
