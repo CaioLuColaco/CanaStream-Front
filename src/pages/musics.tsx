@@ -7,6 +7,8 @@ import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { api } from "@/pages/api/axios";
 import Modal from "@/components/Modal";
+import { GetServerSideProps } from "next/types";
+import { parseCookies } from "nookies";
 
 export default function Musics() {
   const [playing, setPlaying] = useState(false);
@@ -201,3 +203,17 @@ const handleAddMusic = (musicId) => {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  console.log(ctx.req.cookies);
+
+  const { "auth.token": token } = parseCookies(ctx);
+
+  if (!token) {
+    return { redirect: { destination: "/login", permanent: false } };
+  }
+
+  return {
+    props: {},
+  };
+};
