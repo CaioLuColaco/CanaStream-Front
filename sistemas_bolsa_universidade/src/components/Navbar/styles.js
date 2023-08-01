@@ -46,6 +46,7 @@ export const MenuItem = styled.div`
   @media screen and (max-width: 850px) {
     font-size: 1.4rem;
     font-weight: 700;
+    
   }
 `;
 
